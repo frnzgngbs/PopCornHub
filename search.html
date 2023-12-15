@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Search</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                font-family: "Lexend Deca", sans-serif;
+            }
+
+            .container {
+                margin: auto;
+                display: flex;
+                flex-direction: column; /* Adjusted to column direction */
+                justify-content: center;
+                align-items: center;
+            }
+
+            .searchContainer {
+                padding: 0px 10px;
+                width: 300px;
+                border: 1px solid black;
+                border-radius: 50px;
+                background-color: black;
+            }
+
+            .search-bar {
+                display: flex;
+                align-items: center; /* Align items vertically in the middle */
+            }
+
+            .search-text {
+                border: none;
+                width: 180px;
+                background-color: black;
+                border-radius: 50px;
+                color: #ffffff;
+            }
+
+            .search-button,
+            .search-filter {
+                padding-top: 2px;
+                width: 50px;
+                border: none;
+                background: none;
+                cursor: pointer;
+            }
+
+            .search-text::placeholder {
+                color: #ffffff;
+            }
+
+            .search-text:focus {
+                outline: none;
+            }
+
+            /* Hide the second form initially */
+            .filter-form {
+                display: none;
+                margin-top: 10px; /* Added margin for spacing */
+            }
+
+            .filter-setting {
+                margin-top: 10px; /* Added margin for spacing */
+            }
+
+            .apply-button {
+                text-align: center;
+                margin-top: 10px; /* Adjusted margin for spacing */
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="searchContainer">
+                <form action="" class="search-bar">
+                    <button type="submit" class="search-button">
+                        <img src="./search-icon.png" alt="" />
+                    </button>
+                    <input
+                        type="text"
+                        class="search-text"
+                        name="search-text"
+                        id="search-text"
+                        placeholder="Search"
+                    />
+                    <button
+                        type="button"
+                        class="search-filter"
+                        onclick="toggleFilterForm()"
+                    >
+                        <img src="./filter.png" alt="" />
+                    </button>
+                </form>
+            </div>
+
+            <!-- The second form for filters -->
+            <form action="" class="filter-form" id="filterForm">
+                <input
+                    type="radio"
+                    value="Movie"
+                    name="search-setting"
+                    id="search-setting-movie"
+                    class="filter-setting"
+                />
+                <label for="search-setting-movie">Movie</label>
+
+                <input
+                    type="radio"
+                    value="Director"
+                    name="search-setting"
+                    id="search-setting-director"
+                    class="filter-setting"
+                />
+                <label for="search-setting-director">Director</label>
+
+                <input
+                    type="radio"
+                    value="Genre"
+                    name="search-setting"
+                    id="search-setting-genre"
+                    class="filter-setting"
+                />
+                <label for="search-setting-genre">Genre</label>
+
+                <div class="apply-button">
+                    <input type="submit" value="Apply" class="apply-filter" />
+                </div>
+            </form>
+        </div>
+
+        <script>
+            function toggleFilterForm() {
+                var filterForm = document.getElementById("filterForm");
+                filterForm.style.display =
+                    filterForm.style.display === "none" ? "block" : "none";
+            }
+        </script>
+    </body>
+</html>
