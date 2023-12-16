@@ -12,8 +12,6 @@ from .models import Movie
 def display_movie_details(request, movie):
     return render(request, 'MovieDetails.html', {'movie': movie})
 
-from django.db.models import Q
-
 def movie_search(request):
     if request.method == 'POST':
         form = MovieSearchForm(request.POST)
@@ -21,7 +19,6 @@ def movie_search(request):
             search_field = form.cleaned_data['search_field']
             search_query = form.cleaned_data['search_query']
 
-            # Create a dictionary to map form field names to model field names
             field_mapping = {
                 'MovieID': 'MovieID',
                 'MovieTitle': 'MovieTitle',
@@ -30,11 +27,9 @@ def movie_search(request):
                 # Add other fields here
             }
 
-            # Get the model field name based on user's selection
             model_field = field_mapping.get(search_field)
 
             if model_field:
-                # Construct the query dynamically based on user's selection
                 movies = Movie.objects.filter(**{model_field: search_query})
 
                 if movies.exists():
@@ -42,9 +37,14 @@ def movie_search(request):
                 else:
                     error_message = f"No movies found with {search_field} equal to '{search_query}'."
                     return render(request, 'Search.html', {'form': form, 'error_message': error_message})
-    else:
+    else:  # If the request method is not POST (initial page load)
         form = MovieSearchForm()
+        movies = Movie.objects.all()  # Fetch all movies from the database
+
+        return render(request, 'Search.html', {'form': form, 'movies': movies})
+
     return render(request, 'Search.html', {'form': form})
+
 
 
 def index(request):
