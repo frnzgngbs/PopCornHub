@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            font-family: "Century Gothic", sans-serif;
+        }
+        .wrap {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        .wrap h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .wrap .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 40px;
+            font-size: 16px;
+            color: black;
+            outline: none;
+        }
+        .wrap .btn {
+            width: 100%;
+            padding: 15px;
+            background: black;
+            border: none;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+        }
+        .wrap .btn:hover {
+            background: dimgray;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <h1>User Registration</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">REGISTER</button>
+        </form>
+    </div>
+</body>
+</html>
