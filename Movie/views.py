@@ -1,7 +1,4 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.views import View
-from .form import MovieForm
+
 from django.views import View
 from django.shortcuts import render, redirect
 from .form import MovieForm
@@ -54,7 +51,7 @@ def index(request):
     return HttpResponse("hello world")
 
 class MovieView(View):
-    template_name = 'Login.html'  # Corrected template_name
+    template_name = 'erwin.html'  # Corrected template_name
 
     def get(self, request):
         movie_form = Movie.objects.all() # Create an instance of MovieForm

@@ -1,6 +1,5 @@
 from django.db import models
 
-from Authentication.models import User
 from Movie.models import Movie
 
 

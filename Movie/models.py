@@ -9,7 +9,7 @@ class Movie(models.Model):
     Description = models.TextField()
     Rating = models.FloatField()
     RunTime = models.IntegerField()
-    Director = models.CharField(max_length=100)
+    Director = models.CharField(max_length=100, default="")
 
     def __str__(self):
         return self.MovieTitle

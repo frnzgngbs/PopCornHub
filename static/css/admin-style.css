@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Set minimum height to 100% of viewport height */
+}
+
+.container {
+    width: max-content;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 100px;
+    padding: 40px;
+}
+
+.card {
+    width: 300px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px;
+    overflow: hidden;
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-content p {
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+.card-button {
+    display: inline-block;
+    padding: 8px 16px;
+}
+
+nav {
+    position: absolute;
+    left: 80%;
+    text-align: right;
+    margin: 30px;
+    padding: 10px;
+    position: fixed;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-left: 10px;
+}
+a {
+    text-decoration: none;
+}
+nav a {
+    color: #333;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.list-item {
+    display: inline-block;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 0px 2px 4px;
+    width: 300px;
+    padding: 10px;
+    margin-left: 14px;
+    margin-bottom: 14px;
+}
+
+#tracker {
+    font-size: 16px;
+    color: grey;
+}
+
+.list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.info p {
+    margin: 0px 0px 15px;
+}
+
+button {
+    width: 120px;
+    height: 40px;
+    border-radius: 30px;
+    border: none;
+    background-color: black;
+    color: #ffffff;
+}
+
+.submitButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}

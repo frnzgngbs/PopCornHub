@@ -145,18 +145,18 @@
 
 <body>
     <div class="wrap">
-        <form method="post" action="{% url 'login' %}">
+        <form method="post" action="{% url 'Authentication:sign-in' %}">
             {% csrf_token %}
             <h1>LOGIN</h1>
             <div class="input-user">
                 <label>
-                    <input type="user" placeholder="Username" required>
+                    <input type="text" placeholder="Username" required name="username">
                 </label>
                 <i class='bx bxs-user'></i>
             </div>
 
             <div class="input-pass">
-                <input type="password" placeholder="Password" required>
+                <input type="password" placeholder="Password" required name="password">
                 <i class='bx bxs-lock-alt'></i>
             </div>
 
@@ -168,7 +168,7 @@
             <button type="submit" class="btn">LOGIN</button>
 
             <div class="register">
-                <p>Don't have an account? <a href="registration.html">Register</a></p>
+                <p>Don't have an account? <a href="{% url 'Authentication:register' %}">Register</a></p>
             </div>
         </form>
     </div>

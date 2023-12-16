@@ -1,21 +1,59 @@
-from django.shortcuts import render
-from django.shortcuts import render, redirect
-from .form import UserForm
-from django.http import HttpResponse
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
 from django.views import View
 
-def login(request):
-    return render(request, 'login.html')
+from Authentication.form import SignUpForm
 
-class register_form(View):
-    template = 'registration.html'
+
+class SignUpView(View):
+    template_name = "registration.html"
 
     def get(self, request):
-        form = UserForm()
-        return render(request, self.template, {'form':form})
+        form = SignUpForm()
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request):
-        form = UserForm(request.POST)
+        form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, self.template, {'form':form})
+            return redirect('Authentication:sign-in')
+
+        return render(request, self.template_name, {"form": form})
+
+
+class LoginForm(View):
+    template_name = "sign-in.html"
+    def get(self, request):
+        if request.user.is_staff:
+            return redirect('Authentication:sign-in')
+        return render(request, self.template_name)
+
+    def post(self, request):
+        if request.method == "POST":
+            uname = request.POST.get("username")
+            passw = request.POST.get("password")
+
+            auth = {
+                "username": uname,
+                "password": passw
+            }
+
+            user = authenticate(request, username=uname, password=passw)
+
+            print("ASDADADADSADS")
+
+            if user is not None:
+                print(user.is_staff)
+                if user.is_staff:
+                    login(request, user)
+                    request.session['auth'] = auth
+                    return redirect('admin-home')
+                else:
+                    login(request, user)
+                    request.session['auth'] = auth
+                    return redirect('Authentication:register')
+
+        return redirect('Authentication:sign-in')
+
+

@@ -10,7 +10,7 @@ from django.views.generic import View
 
 # Create your views here.
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'sign-in.html')
 class ActorsView(View):
     template_name = 'celebs.html'
     def get(self, request):
