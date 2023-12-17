@@ -34,8 +34,6 @@ class LoginForm(View):
     def post(self, request):
         if request.method == "POST":
 
-            request.session['trace'] = context
-
             uname = request.POST.get("username")
             passw = request.POST.get("password")
 
@@ -73,6 +71,9 @@ class LoginForm(View):
                         "movie": movie_count,
                         "review": review_count
                     }
+
+                    request.session['trace'] = context
+
                     login(request, user)
                     request.session['auth'] = auth
                     return redirect('admin-home')
