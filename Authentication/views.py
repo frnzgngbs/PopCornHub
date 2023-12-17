@@ -34,31 +34,6 @@ class LoginForm(View):
     def post(self, request):
         if request.method == "POST":
 
-            cursor = connection.cursor()
-            cursor.callproc('countUser')
-            countUser = cursor.fetchall()
-            user_count = countUser[0][0] if countUser else None
-
-            # Move to the next result set
-            cursor.nextset()
-
-            # Call the 'countMovies' stored procedure
-            cursor.callproc('countMovies')
-            countMovie = cursor.fetchall()
-            movie_count = countMovie[0][0] if countMovie else None
-
-            cursor.nextset()
-
-            cursor.callproc('countReviews')
-            countReview = cursor.fetchall()
-            review_count = countReview[0][0] if countReview else None
-
-            context = {
-                "user": user_count,
-                "movie": movie_count,
-                "review": review_count
-            }
-
             request.session['trace'] = context
 
             uname = request.POST.get("username")
@@ -74,6 +49,30 @@ class LoginForm(View):
             if user is not None:
                 print(user.is_staff)
                 if user.is_staff:
+                    cursor = connection.cursor()
+                    cursor.callproc('countUser')
+                    countUser = cursor.fetchall()
+                    user_count = countUser[0][0] if countUser else None
+
+                    # Move to the next result set
+                    cursor.nextset()
+
+                    # Call the 'countMovies' stored procedure
+                    cursor.callproc('countMovies')
+                    countMovie = cursor.fetchall()
+                    movie_count = countMovie[0][0] if countMovie else None
+
+                    cursor.nextset()
+
+                    cursor.callproc('countReviews')
+                    countReview = cursor.fetchall()
+                    review_count = countReview[0][0] if countReview else None
+
+                    context = {
+                        "user": user_count,
+                        "movie": movie_count,
+                        "review": review_count
+                    }
                     login(request, user)
                     request.session['auth'] = auth
                     return redirect('admin-home')
