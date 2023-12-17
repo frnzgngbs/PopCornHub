@@ -10,6 +10,6 @@ class Review(models.Model):
     review_id = models.AutoField(primary_key=True)
     rating = models.IntegerField()
     review_text = models.TextField()
-    review_date = models.DateTimeField(default=timezone.now)
+    review_date = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, null=True)
