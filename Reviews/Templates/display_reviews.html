@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Reviews</title>
+</head>
+<body>
+    <h1>Reviews</h1>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <strong>Review ID: </strong> {{review.review_id}}<br>
+                <strong>Rating:</strong> {{ review.rating }}<br>
+                <strong>Review Text:</strong> {{ review.review_text }}<br>
+                <strong>Review Date:</strong> {{ review.review_date }}<br>
+                <strong>User:</strong> {{ review.user_id.username }}<br>
+                <strong>Movie:</strong> {{ review.movie_id.MovieTitle }}<br>
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+</body>
+</html>

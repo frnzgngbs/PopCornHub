@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Actors',
     'Movie',
     'Authentication',
+    'Reviews',
 ]
 
 MIDDLEWARE = [
