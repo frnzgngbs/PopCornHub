@@ -43,11 +43,23 @@ class AdminHome(View):
                     cursor.callproc('searchByTitle', [setting])
                     result = cursor.fetchall()
                     cursor.close()
+                    return render(request, 'admin.html',
+                                  {
+                                      'result': result,
+                                      'type': 'movie',
+                                      'context': context
+                                  })
 
                 elif selected_radio == "Director":
                     cursor.callproc('searchByDirector', [setting])
                     result = cursor.fetchall()
                     cursor.close()
+                    return render(request, 'admin.html',
+                                  {
+                                      'result': result,
+                                      'type': 'movie',
+                                      'context': context
+                                  })
 
                 elif selected_radio == "Genre":
                     cursor.callproc('searchByGenre', [setting])
