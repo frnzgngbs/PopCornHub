@@ -11,5 +11,6 @@ urlpatterns = [
     path('home/movies/reviews', views.allReviews, name="admin-home-reviews"),
     path('home/movies/spam-reviews', views.spamReview, name="admin-home-spam-reviews"),
     path('signout/', views.signOut, name="sign-out"),
-    path('home/delete', views.Delete.as_view(), name="delete")
+    path('home/delete', views.Delete.as_view(), name="delete"),
+    path('addactors/', views.addActors, name="add"),
 ]

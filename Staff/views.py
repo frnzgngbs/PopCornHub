@@ -139,6 +139,9 @@ def signOut(request):
     logout(request)
     return redirect('Authentication:sign-in')
 
+def addActors(request):
+    return redirect('Actors:celebs')
+
 class Delete(View):
     def get(self, request):
         pass

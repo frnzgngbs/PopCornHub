@@ -25,4 +25,9 @@ urlpatterns = [
     path('movie/', include('Movie.urls')),
     path('search/', include('Movie.urls')),
     path('Preferences/',include('UserPreferences.urls')),
+    path('admin/', admin.site.urls),
+    path('', include('Authentication.urls')),
+    path('registration/', include('Authentication.urls')),
+    path('', include('Actors.urls')),
+    path('celebs/', include('Actors.urls')),
 ]
