@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'Movie',
     'Authentication',
     'Reviews',
+    'UserPreferences',
 ]
 
 MIDDLEWARE = [
