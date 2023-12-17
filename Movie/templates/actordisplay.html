@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <style>
+        .movie-details {
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            padding: 30px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h2{
+            text-align: center;
+        }
+        ul{
+            list-style: none;
+        }
+        .user-pref-link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>PopcornHub</h1>
+    <a href="http://127.0.0.1:8000/Preferences/ViewPreferences/" class="user-pref-link">User Preferences</a>
+
+     <form action="{% url 'Movie:signout' %}" method="post" class="user-preferences">
+        {% csrf_token %}
+        <button type="submit">Sign Out</button>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        <button class="actor-button">Actors</button>
+    </form>
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% else %}
+        {% if result %}
+            {% for items in result %}
+                <div class="movie-details">
+                    <p><strong>First Name: </strong>{{ items.0 }}</p>
+                    <p><strong>Last Name:</strong> {{ items.1 }}</p>
+                    <p><strong>Age:</strong> {{ items.2 }}</p>
+                    <p><strong>Birthdate:</strong> {{ items.3 }}</p>
+                    <p><strong>Birthplace:</strong> {{ items.4 }}</p>
+                    <p><strong>Height:</strong> {{ items.5 }}</p>
+                    <p><strong>Description:</strong> {{ items.6 }}</p>
+                    <p><strong>Status:</strong> {{ items.7 }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+</body>
+</html>

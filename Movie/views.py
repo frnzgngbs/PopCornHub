@@ -134,3 +134,10 @@ class SignOutView(View):
     def post(self, request):
         logout(request)
         return redirect('Authentication:sign-in')
+
+def displayDetails(request):
+    cursor = connection.cursor()
+    cursor.callproc('displayDetails')
+    result = cursor.fetchall()
+    cursor.close()
+    return render(request, 'actordisplay.html', {'result': result})

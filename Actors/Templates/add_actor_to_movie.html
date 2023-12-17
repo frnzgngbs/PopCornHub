@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Actor to Movie</title>
+
+    <style>
+        /* Add your styles here */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-wrap">
+            <h1>Add Actor to Movie</h1>
+            <form method="post">
+                {% csrf_token %}
+                <label for="actor_id">Actor ID:</label>
+                <input type="text" id="actor_id" name="actor_id" required>
+
+                <label for="movie_id">Movie ID:</label>
+                <input type="text" id="movie_id" name="movie_id" required>
+
+                <label for="role">Role:</label>
+                <input type="text" id="role" name="role" required>
+
+                <button type="submit" class="btn">Add Actor to Movie</button>
+            </form>
+
+            <!-- Add a button to return to the movie details or any other page -->
+            <a href="{% url 'your_movie_details_url_name' %}" class="back-btn"><button>Return to Movie Details</button></a>
+        </div>
+
+        <!-- You can include additional content or information about the movie here -->
+    </div>
+</body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celebrity</title>
+    <title>Add Actor to Movie</title>
 
     <style>
         * {
@@ -24,8 +24,8 @@
 
         .container {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
             max-width: 800px;
             width: 100%;
         }
@@ -36,7 +36,8 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 30px;
-            width: 48%; /* Adjust as needed */
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
 
@@ -45,13 +46,16 @@
             margin-bottom: 20px;
         }
 
-        .form-wrap .input-group {
-            margin-bottom: 20px;
+        .form-wrap label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
         }
 
         .form-wrap input {
             width: 100%;
             padding: 10px;
+            margin-bottom: 20px;
             border: 2px solid rgba(0, 0, 0, 0.2);
             border-radius: 40px;
             font-size: 16px;
@@ -76,52 +80,35 @@
             background: dimgray;
         }
 
-        .actor-list-wrap {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            width: 48%; /* Adjust as needed */
-            text-align: center;
-        }
-
-        .actor-list-wrap h2 {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .actor-list-wrap ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .actor-list-wrap li {
-            margin-bottom: 5px;
+        .back-btn {
+            margin-top: 20px;
+            width: 100%;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-wrap">
-            <h1>Add Celebrity</h1>
+            <h1>Add Actor to Movie</h1>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn">ADD ACTORS</button>
-            </form>
-        </div>
 
-        <div class="actor-list-wrap">
-            <h2>All Actors</h2>
-            <ul>
-                {% for actor in actors %}
-                    <li>{{ actor.FirstName }} {{ actor.LastName }}</li>
-                {% endfor %}
-            </ul>
-        <a href="{% url 'Actors:update_status' %}"><button class="btn">Update Status</button></a>
-        <a href="{% url 'Actors:add_actor_to_movie' %}"><button class="btn">Add Actor to Movie</button></a>
+                <label for="actor_id">Actor ID:</label>
+                <input type="text" id="actor_id" name="actor_id" placeholder="Enter Actor ID" required>
+
+                <label for="movie_id">Movie ID:</label>
+                <input type="text" id="movie_id" name="movie_id" placeholder="Enter Movie ID" required>
+
+                <label for="role">Role:</label>
+                <input type="text" id="role" name="role" placeholder="Enter Role" required>
+
+                <button type="submit" class="btn">Add Actor to Movie</button>
+            </form>
+
+            <!-- Add a button to return to the movie details or any other page -->
+            <a href="{% url 'Actors:celebs' %}" class="back-btn"><button>Return to Movie Details</button></a>
         </div>
     </div>
 </body>
 </html>
+

@@ -23,6 +23,5 @@ class ActorMovie(models.Model):
     actor = models.ForeignKey(Actors, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     role = models.CharField(max_length=255)
-
     def __str__(self):
         return f"{self.actor.FirstName} {self.actor.LastName} in {self.movie.MovieTitle} as {self.role}"

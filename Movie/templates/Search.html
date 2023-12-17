@@ -28,16 +28,24 @@
 
     <h1>PopcornHub</h1>
     <a href="http://127.0.0.1:8000/Preferences/ViewPreferences/" class="user-pref-link">User Preferences</a>
+
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Search</button>
         <input type="hidden" name="action_type" value="search">
     </form>
+
      <form action="{% url 'Movie:signout' %}" method="post" class="user-preferences">
         {% csrf_token %}
         <button type="submit">Sign Out</button>
     </form>
+
+    <form method="post" action="{% url 'Movie:displayDetails' %}">
+        {% csrf_token %}
+        <button class="actor-button">Actors</button>
+    </form>
+
     {% if error_message %}
         <p>{{ error_message }}</p>
     {% else %}
@@ -76,8 +84,6 @@
                         <input type="hidden" name="movie_id" value = {{movie.MovieID}} >
                     </form>
                 </div>
-
-
             {% endfor %}
         </ul>
     {% endif %}

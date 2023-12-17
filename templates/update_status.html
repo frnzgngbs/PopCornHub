@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celebrity</title>
+    <title>Update Actor Status</title>
 
     <style>
         * {
@@ -24,8 +24,8 @@
 
         .container {
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
             max-width: 800px;
             width: 100%;
         }
@@ -36,7 +36,8 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 30px;
-            width: 48%; /* Adjust as needed */
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
 
@@ -76,14 +77,21 @@
             background: dimgray;
         }
 
+        .back-btn {
+            margin-top: 20px;
+            width: 100%;
+        }
+
         .actor-list-wrap {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid #ccc;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             padding: 20px;
-            width: 48%; /* Adjust as needed */
+            width: 100%;
+            max-width: 400px;
             text-align: center;
+            margin-top: 20px;
         }
 
         .actor-list-wrap h2 {
@@ -104,24 +112,26 @@
 <body>
     <div class="container">
         <div class="form-wrap">
-            <h1>Add Celebrity</h1>
+            <h1>Update Actor Status</h1>
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn">ADD ACTORS</button>
+                <label for="actor_id">Actor ID:</label>
+                <input type="text" id="actor_id" name="actor_id" required>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="Active">Active</option>
+                    <option value="Retired">Retired</option>
+                </select>
+
+                <button type="submit" class="btn">Update Status</button>
             </form>
+
+            <!-- Add a button to return to celebs.html -->
+            <a href="{% url 'Actors:celebs' %}" class="back-btn"><button>Return to Celebs</button></a>
         </div>
 
-        <div class="actor-list-wrap">
-            <h2>All Actors</h2>
-            <ul>
-                {% for actor in actors %}
-                    <li>{{ actor.FirstName }} {{ actor.LastName }}</li>
-                {% endfor %}
-            </ul>
-        <a href="{% url 'Actors:update_status' %}"><button class="btn">Update Status</button></a>
-        <a href="{% url 'Actors:add_actor_to_movie' %}"><button class="btn">Add Actor to Movie</button></a>
-        </div>
     </div>
 </body>
 </html>
+
