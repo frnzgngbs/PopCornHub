@@ -1,4 +1,3 @@
-
 from django.views import View
 from django.shortcuts import render, redirect
 from .form import MovieForm
@@ -9,6 +8,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .form import MovieSearchForm
 from .models import Movie
+from django.contrib.auth import logout
 # Create your views here.
 
 def display_movie_details(request, movie):
@@ -17,7 +17,8 @@ def display_movie_details(request, movie):
 def movie_search(request):
     actionType = request.POST.get('action_type')
     auth_user = request.session.get('auth')
-    current_user = auth_user['username']
+    if auth_user is not None and 'username' in auth_user:
+        current_user = auth_user['username']
     UserReference_movieID = request.POST.get('movie_id')
 
     if request.method == 'POST' and actionType == 'search':
@@ -129,16 +130,7 @@ class MovieView(View):
             return redirect('admin:Movie_movie_changelist')  # Redirect to the admin Movie change list
         return render(request, self.template_name, {'form': movie_form})
 
-class SignView(View):
-    templates = 'Signup.html'
-
-    def get(self, request):
-        sign = MovieForm()
-        return render(request, self.templates)
-
-class Login2View(View):
-    templates = 'Login2.html'
-
-    def get(self, request):
-        log = MovieForm()
-        return render(request, self.templates)
+class SignOutView(View):
+    def post(self, request):
+        logout(request)
+        return redirect('Authentication:sign-in')

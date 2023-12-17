@@ -34,6 +34,10 @@
         <button type="submit">Search</button>
         <input type="hidden" name="action_type" value="search">
     </form>
+     <form action="{% url 'Movie:signout' %}" method="post" class="user-preferences">
+        {% csrf_token %}
+        <button type="submit">Sign Out</button>
+    </form>
     {% if error_message %}
         <p>{{ error_message }}</p>
     {% else %}
@@ -71,7 +75,6 @@
                         <input type="hidden" name="action_type" value="addWatched">
                         <input type="hidden" name="movie_id" value = {{movie.MovieID}} >
                     </form>
-
                 </div>
 
 

@@ -80,7 +80,7 @@ class LoginForm(View):
                 else:
                     login(request, user)
                     request.session['auth'] = auth
-                    return redirect('Authentication:register')
+                    return redirect('Movie:search')
 
         return redirect('Authentication:sign-in')
 
