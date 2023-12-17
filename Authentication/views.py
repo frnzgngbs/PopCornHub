@@ -1,5 +1,5 @@
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.models import User
+from django.db import connection
 from django.shortcuts import redirect, render
 from django.views import View
 
@@ -25,12 +25,42 @@ class SignUpView(View):
 class LoginForm(View):
     template_name = "sign-in.html"
     def get(self, request):
-        if request.user.is_staff:
-            return redirect('Authentication:sign-in')
+        if request.user.is_authenticated:
+            if request.user.is_staff:
+                return redirect('admin-home')
+            return redirect('Movie:search')
         return render(request, self.template_name)
 
     def post(self, request):
         if request.method == "POST":
+
+            cursor = connection.cursor()
+            cursor.callproc('countUser')
+            countUser = cursor.fetchall()
+            user_count = countUser[0][0] if countUser else None
+
+            # Move to the next result set
+            cursor.nextset()
+
+            # Call the 'countMovies' stored procedure
+            cursor.callproc('countMovies')
+            countMovie = cursor.fetchall()
+            movie_count = countMovie[0][0] if countMovie else None
+
+            cursor.nextset()
+
+            cursor.callproc('countReviews')
+            countReview = cursor.fetchall()
+            review_count = countReview[0][0] if countReview else None
+
+            context = {
+                "user": user_count,
+                "movie": movie_count,
+                "review": review_count
+            }
+
+            request.session['trace'] = context
+
             uname = request.POST.get("username")
             passw = request.POST.get("password")
 
@@ -40,8 +70,6 @@ class LoginForm(View):
             }
 
             user = authenticate(request, username=uname, password=passw)
-
-            print("ASDADADADSADS")
 
             if user is not None:
                 print(user.is_staff)

@@ -16,20 +16,22 @@
             <div class="card">
                 <div class="card-content">
                     <p>User</p>
-                    <form action="#" method="post">
-                        <input type="text" name="user" id="user" required />
+                    <form action="{% url 'admin-home' %}" method="post" name="userSearchForm">
+                        {% csrf_token %}
+                        <input type="text" name="username" id="username" required />
                         <br /><br />
-                        <input type="submit" value="Search" />
+                        <input type="submit" name="button" value="user-search" />
                     </form>
-                    <p id="tracker">2 <span id="total">Users</span></p>
+                    <p id="tracker">{{ context.user }} <span id="total">Users</span></p>
                 </div>
 
-                <a href="" class="card-button">See Details</a>
+                <a href="{% url 'admin-home-users' %}" class="card-button">Display All</a>
             </div>
             <div class="card">
                 <div class="card-content">
                     <p>Movie</p>
-                    <form action="#" method="post">
+                    <form action="{% url 'admin-home' %}" method="post" name="movieSearchForm">
+                        {% csrf_token %}
                         <input type="text" name="movie" id="movie" required />
                         <br />
                         <input
@@ -62,57 +64,116 @@
                         />
                         Genre
 
-                        <input type="submit" value="Search" />
+                        <input type="submit" name="button" value="movie-search" />
                     </form>
                     <p id="tracker">
-                        100 <span id="total">Number of Movies</span>
+                        {{ context.movie }} <span id="total">Number of Movies</span>
                     </p>
                 </div>
-                <a href="" class="card-button">See Details</a>
+                <a href="{% url 'admin-home-movies' %}" class="card-button">Display All</a>
             </div>
             <div class="card">
                 <div class="card-content">
                     <p>Review</p>
-                    <form action="#" method="post">
-                        <input type="text" name="movie" id="movie" required />
+                    <form action="{% url 'admin-home' %}" method="post" name="reviewSearchForm">
+                        {% csrf_token %}
+                        <input type="text" name="review" id="review" required />
                         <br />
                         <br />
-                        <input type="submit" value="Search" />
+                        <input type="submit" name="button" value="review-search" />
                     </form>
                     <p id="tracker">
-                        2 <span id="total">Number of Movies Rated</span>
+                        {{ context.review }} <span id="total">Number of Movies Rated</span>
                     </p>
                 </div>
-                <a href="" class="card-button">Remove Spam</a>
+                <div class="card-buttons">
+                    <a href="{% url 'admin-home-reviews' %}" class="card-button">Display All</a>
+                    <a href="{% url 'admin-home-spam-reviews' %}" class="card-button">Remove Spams</a>
+                </div>
+
             </div>
         </div>
         <div class="list-container">
-            <form action="#" method="post">
+            <form action="{% url 'delete' %}" method="post" name="deleteForm">
+                {% csrf_token %}
                 <div class="list-item-container">
+                {% if result and type == "user" %}
+                    {% for item in result %}
                     <div class="list-item">
                         <input
                             type="checkbox"
-                            value="Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Ratione fugit culpa deserunt dicta doloribus
-                        exercitationem itaque sed vero praesentium voluptatibus
-                        ipsam debitis repudiandae corporis autem, ut libero
-                        fugiat, rerum quae!"
+                            value="{{ item.0 }}"
                             id="checkbox_value"
                             name="checkbox_group"
                         />
                         <br />
-                        <div class="info">
-                            <p>User ID: <span id="info-content">1</span></p>
-                            <p>
-                                Username: <span id="info-content">Franz</span>
-                            </p>
-                        </div>
+                                <div class="info">
+                                    <p>User ID: <span id="info-content">{{ item.0 }}</span></p>
+                                    <p>Username: <span id="info-content">{{ item.4 }}</span></p>
+                                </div>
                     </div>
-                <div class="submitButton">
-                    <button type="submit" name="submit" id="submit">
-                        Delete
-                    </button>
-                </div>
+                    {% endfor %}
+                    <div class="submitButton">
+                        <button type="submit" name="delete-button" id="submit" value="delete-user-button">
+                            Delete
+                        </button>
+                    </div>
+                {% endif %}
+                    {% if result and type == "movie" %}
+                        {% for item in result %}
+                            <div class="list-item">
+                                <input
+                                        type="checkbox"
+                                        value="{{ item.0 }}"
+                                        id="checkbox_value"
+                                        name="checkbox_group"
+                                />
+                                <br />
+                                <div class="info">
+                                    <p>Movie ID: <span id="info-content">{{ item.0 }}</span></p>
+                                    <p>Title: <span id="info-content">{{ item.1 }}</span></p>
+                                    <p>Release Date: <span id="info-content">{{ item.2 }}</span></p>
+                                    <p>Genre: <span id="info-content">{{ item.3 }}</span></p>
+                                    <p>Description: <span id="info-content">{{ item.4 }}</span></p>
+                                    <p>Runtime: <span id="info-content">{{ item.6 }}</span></p>
+                                    <p>Director: <span id="info-content">{{ item.7 }}</span></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="submitButton">
+                            <button type="submit" name="delete-button" id="submit" value="delete-movie-button">
+                                Delete
+                            </button>
+                        </div>
+                    {% endif %}
+                    {% if result and type == "review" %}
+                        {% for item in result %}
+                            <div class="list-item">
+                                <input
+                                        type="checkbox"
+                                        value="{{ item.0 }}"
+                                        id="checkbox_value"
+                                        name="checkbox_group"
+                                />
+                                <br />
+                                <div class="info">
+                                    <p>Review ID: <span id="info-content">{{ item.0 }}</span></p>
+                                    <p>Movie ID: <span id="info-content">{{ item.1 }}</span></p>
+                                    <p>Title: <span id="info-content">{{ item.2 }}</span></p>
+                                    <p>About: <span id="info-content">{{ item.3 }}</span></p>
+                                    <p>Username: <span id="info-content">{{ item.4 }}</span></p>
+                                    <p>Rating: <span id="info-content">{{ item.5 }}</span></p>
+                                    <p>Comment: <span id="info-content">{{ item.6 }}</span></p>
+                                    <p>Date Reviewed: <span id="info-content">{{ item.7 }}</span></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="submitButton">
+                            <button type="submit" name="delete-button" id="submit" value="delete-review-button">
+                                Delete
+                            </button>
+                        </div>
+                    {% endif %}
                 </div>
             </form>
         </div>
