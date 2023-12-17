@@ -3,6 +3,8 @@ from django.views import View
 from django.shortcuts import render, redirect
 from .form import MovieForm
 from django.db import connection
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponse
 from .form import MovieSearchForm
@@ -13,7 +15,12 @@ def display_movie_details(request, movie):
     return render(request, 'MovieDetails.html', {'movie': movie})
 
 def movie_search(request):
-    if request.method == 'POST':
+    actionType = request.POST.get('action_type')
+    auth_user = request.session.get('auth')
+    current_user = auth_user['username']
+    UserReference_movieID = request.POST.get('movie_id')
+
+    if request.method == 'POST' and actionType == 'search':
         form = MovieSearchForm(request.POST)
         if form.is_valid():
             search_field = form.cleaned_data['search_field']
@@ -37,6 +44,52 @@ def movie_search(request):
                 else:
                     error_message = f"No movies found with {search_field} equal to '{search_query}'."
                     return render(request, 'Search.html', {'form': form, 'error_message': error_message})
+
+    #Button add To Favorites
+    elif request.method == 'POST' and actionType == 'addMovie':
+
+        with connection.cursor() as cursor:
+            cursor.callproc('getUserID', [current_user])
+            current_uID = cursor.fetchall()[0][0]
+            cursor.close()
+
+        args = [UserReference_movieID, current_uID]
+        with connection.cursor() as cursor:
+            cursor.callproc('addToFavorite', args)
+            cursor.close()
+
+        return HttpResponseRedirect(reverse('Movie:search'))
+
+    #Button add To Watchlist
+    elif request.method == 'POST' and actionType == 'addWatchlist':
+
+        with connection.cursor() as cursor:
+            cursor.callproc('getUserID', [current_user])
+            current_uID = cursor.fetchall()[0][0]
+            cursor.close()
+
+        args = [UserReference_movieID, current_uID]
+        with connection.cursor() as cursor:
+            cursor.callproc('addToWatchlist', args)
+            cursor.close()
+
+        return HttpResponseRedirect(reverse('Movie:search'))
+
+    #Button marked as watched
+    elif request.method == 'POST' and actionType == 'addWatched':
+
+        with connection.cursor() as cursor:
+            cursor.callproc('getUserID', [current_user])
+            current_uID = cursor.fetchall()[0][0]
+            cursor.close()
+
+        args = [UserReference_movieID, current_uID]
+        with connection.cursor() as cursor:
+            cursor.callproc('markWatched', args)
+            cursor.close()
+
+        return HttpResponseRedirect(reverse('Movie:search'))
+
     else:  # If the request method is not POST (initial page load)
         form = MovieSearchForm()
         movies = Movie.objects.all()  # Fetch all movies from the database

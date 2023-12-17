@@ -24,6 +24,13 @@
         <p><strong>Description:</strong> {{ movie.Description }}</p>
         <p><strong>Rating:</strong> {{ movie.Rating }}</p>
         <p><strong>RunTime:</strong> {{ movie.RunTime }}</p>
+        <form  method="post">
+            {% csrf_token %}
+            <button class="button" onclick="addMovie()">Add</button>
+            <button class="button" onclick="removeMovie()">Remove</button>
+            <button class="button" onclick="markAsWatched()">Mark as Watched</button>
+        </form>
+
     </div>
 </body>
 </html>

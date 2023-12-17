@@ -1,6 +1,8 @@
 from django.db import models
 
 # Create your models here.
+
+
 class Movie(models.Model):
     MovieID = models.CharField(max_length=20, primary_key=True, db_index=True)
     MovieTitle = models.CharField(max_length=50)

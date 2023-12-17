@@ -17,15 +17,22 @@
         ul{
             list-style: none;
         }
+        .user-pref-link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body>
 
     <h1>PopcornHub</h1>
+    <a href="http://127.0.0.1:8000/Preferences/ViewPreferences/" class="user-pref-link">User Preferences</a>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Search</button>
+        <input type="hidden" name="action_type" value="search">
     </form>
     {% if error_message %}
         <p>{{ error_message }}</p>
@@ -43,7 +50,31 @@
                     <p><strong>RunTime:</strong> {{ movie.RunTime }}</p>
                     <p><strong>Director:</strong> {{ movie.Director }}</p>
                 </li>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="button">Add to Favorite</button>
+                        <input type="hidden" name="action_type" value="addMovie">
+                        <input type="hidden" name="movie_id" value = {{movie.MovieID}} >
+                    </form>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="button">Add to Watchlist</button>
+                        <input type="hidden" name="action_type" value="addWatchlist">
+                        <input type="hidden" name="movie_id" value = {{movie.MovieID}} >
+                    </form>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <button class="button">Mark as Watched</button>
+                        <input type="hidden" name="action_type" value="addWatched">
+                        <input type="hidden" name="movie_id" value = {{movie.MovieID}} >
+                    </form>
+
                 </div>
+
+
             {% endfor %}
         </ul>
     {% endif %}
